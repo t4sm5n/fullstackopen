@@ -43,3 +43,57 @@ sisältämä lista, ja joka noudattaa style sheetin
 määrittelemää ulkonäköä
 end note
 ```
+## 0.4 Uusi muistiinpano
+
+![sekvenssikaavio](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgVXVzaSBtdWlzdGlpbnBhbm8KCmtheXR0YWphLT5zZWxhaW46Cm5vdGUgbGVmdCBvZiAADwYAHQkga2lyam9pdHRhYSB0ZWtzdGlrZW50dMOkw6RuAFAJLQpwYW5vbiBqYSBwYWluYWEgJ1RhbGxldGEnLW5hcHBpYQplbmQgbm90ZQoAbwYtPnBhbHZlbGluOiBQT1NUIGZ1bGxzdGFjay1leGFtcGxlYXBwLmhlcm9rdWFwcC5jb20vbmV3XwA-BQCBIw0AQAgAUgcgdGVrZWUATgZrdXRzdW4AGghtZWxsZSwgam9zc2EKcGFyYW1ldHJpbmEgdQCCFBAgAIEkCgCBHggAgiQJIHN0YXR1cyAzMDIsIHV1ZGVsbGVlbm9oamF1cyBzaXZ1bGxlAIFkBXMAgRAXAIFwCCBvaGphYQCCaQZtZW4gc2FtYWxsZQA8CCwgam90ZW4Kc2l2dSBsYWRhdGFhbgBsBXMABQUoIHTDpHN0w6QgZXRlZW5ww6RpbgpzYW1hIGt1AIIBBWh0w6R2w6QgMykAgmAcR0UAglUmAIE2G211b2Rvc3RlAIEcBUhUTUwgbWlzc8OkIG90c2lra28sIGxpc3RhIGphIGZvcm0AgjkjMjAwLACCRwUASgYta29vZGkKAINbHG1lbiA8aGVhZD4gb3NpbyBzaXPDpGwAhSEFIHZpaXR0YXVrc2V0IHN0eWxlIHNoZWV0LQpqYSBqYXZhc2NyaXB0LXRpZWRvc3RvaWhpbgCCdgcgbmUAgnEKAIQ8CnQAhUMLAIIZOm1haW4uY3NzAIFnIACBKAoALUBqAEwgAIF7EwCCXhgAgi4LAIMZBQCGcAdHRQCGbQkKam9sbGEgaGEAhBMGanNvbgCCWwkAgXxRZGF0YS5qc28AhlUKAIFLFwB6DACEQw8AiXIHAIhAB27DpHkAiWEGAIg2CgCIRgVhdXR0YW0AhWQHOm4sCmpvaG9uIG9uIHBhcnNpdHR1AIRLC2lsbMOkAIFuDm4KAIUUCW3DpACGFgYsIGphIGpva2Egbm91ZGEAimgFAIUgC2luCm3DpMOkcml0dGVsZQAHBSB1bGtvbsOka8O2w6QAilQK&s=default)
+```
+title Uusi muistiinpano
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa tekstikenttään muistiin-
+panon ja painaa 'Talleta'-nappia
+end note
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
+note left of palvelin
+selain tekee POST kutsun palvelimelle, jossa
+parametrina uusi muistiinpano 
+end note
+palvelin->selain: status 302, uudelleenohjaus sivulle notes
+note left of palvelin
+palvelin ohjaa selaimen samalle sivulle, joten
+sivu ladataan uudestaan ( tästä eteenpäin
+sama kuin tehtävä 3)
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+note left of palvelin
+muodostetaan HTML missä otsikko, lista ja form
+end note
+palvelin->selain: status 200, sivun HTML-koodi
+
+note left of palvelin
+selaimen <head> osio sisältää viittaukset style sheet-
+ja javascript-tiedostoihin, joten ne ladataan palvelimelta
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.css
+palvelin->selain: status 200, style sheet
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/main.js
+palvelin->selain: status 200, javascript-tiedosto
+
+note left of palvelin
+javascript-koodi tekee GET kutsun 
+jolla haetaan json-tiedosto palvelimelta
+end note
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: status 200, json-tiedosto
+
+note left of selain
+selain näyttää palvelimen palauttaman HTML:n,
+johon on parsittu javascriptillä json-tiedoston
+sisältämä lista, ja joka noudattaa style sheetin
+määrittelemää ulkonäköä
+end note
+```
