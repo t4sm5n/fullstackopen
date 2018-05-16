@@ -15,3 +15,4 @@ Course material available at <https://fullstackopen.github.io/>
 
 - [x] 1.1 Reactin alkeet ([ratkaisu](osa1/kurssit))
 - [x] 1.2 Lisää komponentteja ([ratkaisu](osa1/kurssit))
+- [x] 1.3 Tieto olioissa ([ratkaisu](osa1/kurssit))
