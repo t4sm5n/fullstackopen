@@ -19,9 +19,9 @@ const App = () => {
     const Sisalto = ( props ) => {
         return (
             <div>
-                <p>{ osa1 } { tehtavia1 }</p>
-                <p>{ osa2 } { tehtavia2 }</p>
-                <p>{ osa3 } { tehtavia3 }</p>
+                <Osa osa={ osa1 } tehtavia={ tehtavia1 }/>
+                <Osa osa={ osa2 } tehtavia={ tehtavia2 }/>
+                <Osa osa={ osa3 } tehtavia={ tehtavia3 }/>
             </div>
         )
     }
@@ -29,6 +29,12 @@ const App = () => {
     const Yhteensa = ( props ) => {
         return (
             <p>Yhteensä { props.yhteensa } tehtävää</p>
+        )
+    }
+
+    const Osa = ( props ) => {
+        return (
+            <p>{ props.osa } { props.tehtavia }</p>
         )
     }
 
