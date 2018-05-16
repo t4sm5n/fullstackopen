@@ -27,9 +27,9 @@ const App = () => {
     const Sisalto = ( props ) => {
         return (
             <div>
-                <Osa osa={ osa1.nimi } tehtavia={ osa1.tehtavia }/>
-                <Osa osa={ osa2.nimi } tehtavia={ osa2.tehtavia }/>
-                <Osa osa={ osa3.nimi } tehtavia={ osa3.tehtavia }/>
+                <Osa osa={ props.osa1 } tehtavia={ props.tehtavia1 }/>
+                <Osa osa={ props.osa2 } tehtavia={ props.tehtavia2 }/>
+                <Osa osa={ props.osa3 } tehtavia={ props.tehtavia3 }/>
             </div>
         )
     }
