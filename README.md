@@ -19,3 +19,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 1.4 Oliot taulukkoon ([ratkaisu](osa1/kurssit))
 - [x] 1.5 Kurssi olioksi ([ratkaisu](osa1/kurssit))
 - [x] 1.6 Unicafe osa 1 ([ratkaisu](osa1/unicafe))
+- [x] 1.7 Unicafe osa 2 ([ratkaisu](osa1/unicafe))

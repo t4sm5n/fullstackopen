@@ -7,24 +7,74 @@ class App extends React.Component {
         this.state = {
             hyva: 0,
             neutraali: 0,
-            huono: 0
+            huono: 0,
+            arvot: []
         }
     }
   
-    clickHyva = () => this.setState({ hyva: this.state.hyva + 1 })
-    clickNeutraali = () => this.setState({ neutraali: this.state.neutraali + 1 })
-    clickHuono = () => this.setState({ huono: this.state.huono + 1 })
+    clickHyva = () => {
+        this.setState({
+            hyva: this.state.hyva + 1,
+            arvot: this.state.arvot.concat( 1 )
+        })
+    }
+
+    clickNeutraali = () => {
+        this.setState({
+            neutraali: this.state.neutraali + 1,
+            arvot: this.state.arvot.concat( 0 )
+        })
+    }
+
+    clickHuono = () => {
+        this.setState({
+            huono: this.state.huono + 1,
+            arvot: this.state.arvot.concat( -1 )
+        })
+    }
   
     render() {
-        const statistiikka = () => {
+        const keskiarvo = () => {
+            if( this.state.arvot.length === 0 ) {
+                return (
+                    <p>Palautetta ei ole vielä annettu!</p>
+                )
+            }
+
+            let summa = this.state.arvot.reduce(( previous, current ) => current += previous )
+            let keskiarvo = summa / this.state.arvot.length
+
             return (
-                <div>
-                    <p>Hyvä { this.state.hyva }</p>
-                    <p>Neutraali { this.state.neutraali }</p>
-                    <p>Huono { this.state.huono }</p>
-                </div>
+                <p>Keskiarvo { Math.round( keskiarvo * 10 ) / 10 }</p>
             )
         }
+
+        const prosentti = () => {
+            if( this.state.arvot.length === 0 ) {
+                return (
+                    <p>Palautetta ei ole vielä annettu!</p>
+                )
+            }
+            
+            let prosentti = ( this.state.hyva / this.state.arvot.length ) * 100
+
+            return (
+                <p>Positiivisia { Math.round( prosentti * 10 / 10 ) } %</p>
+            )
+        }
+
+        const statistiikka = () => (
+            <div>
+                <p>Hyvä { this.state.hyva }</p>
+                <p>Neutraali { this.state.neutraali }</p>
+                <p>Huono { this.state.huono }</p>
+                <div>
+                    { keskiarvo() }
+                    { prosentti() }
+                </div>
+                
+            </div>
+        )
 
         return (
             <div>
