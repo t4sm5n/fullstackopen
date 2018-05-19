@@ -11,12 +11,13 @@ Course material available at <https://fullstackopen.github.io/>
 - [ ] 0.05 Single page app
 - [ ] 0.06 Uusi muistiinpano SPA:ssa
 
-## Osa 1
+## Osa 1 ([Ratkaisut](osa1))
 
-- [x] 1.1 Reactin alkeet ([ratkaisu](osa1/kurssit))
-- [x] 1.2 Lisää komponentteja ([ratkaisu](osa1/kurssit))
-- [x] 1.3 Tieto olioissa ([ratkaisu](osa1/kurssit))
-- [x] 1.4 Oliot taulukkoon ([ratkaisu](osa1/kurssit))
-- [x] 1.5 Kurssi olioksi ([ratkaisu](osa1/kurssit))
-- [x] 1.6 Unicafe osa 1 ([ratkaisu](osa1/unicafe))
-- [x] 1.7 Unicafe osa 2 ([ratkaisu](osa1/unicafe))
+- [x] 1.1 Reactin alkeet
+- [x] 1.2 Lisää komponentteja
+- [x] 1.3 Tieto olioissa
+- [x] 1.4 Oliot taulukkoon
+- [x] 1.5 Kurssi olioksi
+- [x] 1.6 Unicafe osa 1
+- [x] 1.7 Unicafe osa 2
+- [x] 1.8 Unicafe osa 3

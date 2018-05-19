@@ -1,9 +1,65 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+const Button = ({ onClick, arvo }) => {
+    return (
+        <button onClick={ onClick }>{ arvo }</button>
+    )
+}
+
+class Statistics extends React.Component {
+    constructor( props ) {
+        super( props )
+    }
+
+    render() {
+        const keskiarvo = () => {
+            if( this.props.arvot.length === 0 ) {
+                return (
+                    0
+                )
+            }
+
+            let summa = this.props.arvot.reduce(( previous, current ) => current += previous )
+            let keskiarvo = summa / this.props.arvot.length
+
+            return Math.round( keskiarvo * 10 ) / 10
+        }
+
+        const prosentti = () => {
+            if( this.props.arvot.length === 0 ) {
+                return (
+                    0
+                )
+            }
+            
+            let prosentti = ( this.props.hyva / this.props.arvot.length ) * 100
+
+            return Math.round( prosentti * 10 ) / 10
+        }
+        
+        return (
+            <div>
+                <Statistic teksti="Hyvä" arvo={ this.props.hyva } />
+                <Statistic teksti="Neutraali" arvo={ this.props.neutraali } />
+                <Statistic teksti="Huono" arvo={ this.props.huono } />
+                <Statistic teksti="Keskiarvo" arvo={ keskiarvo() } />
+                <Statistic teksti="Positiivisia" arvo={ `${ prosentti() } %` } />
+            </div>
+        )
+    }
+
+}
+
+const Statistic = ({ teksti, arvo }) => {
+    return (
+        <p>{ teksti } { arvo }</p>
+    )
+}
+
 class App extends React.Component {
-    constructor(props) {
-        super(props)
+    constructor( props ) {
+        super( props )
         this.state = {
             hyva: 0,
             neutraali: 0,
@@ -34,59 +90,17 @@ class App extends React.Component {
     }
   
     render() {
-        const keskiarvo = () => {
-            if( this.state.arvot.length === 0 ) {
-                return (
-                    <p>Palautetta ei ole vielä annettu!</p>
-                )
-            }
-
-            let summa = this.state.arvot.reduce(( previous, current ) => current += previous )
-            let keskiarvo = summa / this.state.arvot.length
-
-            return (
-                <p>Keskiarvo { Math.round( keskiarvo * 10 ) / 10 }</p>
-            )
-        }
-
-        const prosentti = () => {
-            if( this.state.arvot.length === 0 ) {
-                return (
-                    <p>Palautetta ei ole vielä annettu!</p>
-                )
-            }
-            
-            let prosentti = ( this.state.hyva / this.state.arvot.length ) * 100
-
-            return (
-                <p>Positiivisia { Math.round( prosentti * 10 / 10 ) } %</p>
-            )
-        }
-
-        const statistiikka = () => (
-            <div>
-                <p>Hyvä { this.state.hyva }</p>
-                <p>Neutraali { this.state.neutraali }</p>
-                <p>Huono { this.state.huono }</p>
-                <div>
-                    { keskiarvo() }
-                    { prosentti() }
-                </div>
-                
-            </div>
-        )
-
         return (
             <div>
                 <div>
                     <h2>Anna palautetta</h2>
                     <div>
-                        <button onClick={ this.clickHyva }>Hyvä</button>
-                        <button onClick={ this.clickNeutraali }>Neutraali</button>
-                        <button onClick={ this.clickHuono }>Huono</button>
+                        <Button onClick={ this.clickHyva } arvo="Hyvä" />
+                        <Button onClick={ this.clickNeutraali } arvo="Neutraali" />
+                        <Button onClick={ this.clickHuono } arvo="Huono" />
                     </div>
                     <h2>Statistiikka</h2>
-                    <div>{ statistiikka() }</div>
+                    <Statistics { ...this.state } />
                 </div>
             </div>
         )
