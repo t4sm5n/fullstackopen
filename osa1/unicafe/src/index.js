@@ -8,10 +8,6 @@ const Button = ({ onClick, arvo }) => {
 }
 
 class Statistics extends React.Component {
-    constructor( props ) {
-        super( props )
-    }
-
     render() {
         if( this.props.arvot.length === 0 ) {
             return (
@@ -33,13 +29,15 @@ class Statistics extends React.Component {
         }
         
         return (
-            <div>
-                <Statistic teksti="Hyvä" arvo={ this.props.hyva } />
-                <Statistic teksti="Neutraali" arvo={ this.props.neutraali } />
-                <Statistic teksti="Huono" arvo={ this.props.huono } />
-                <Statistic teksti="Keskiarvo" arvo={ keskiarvo() } />
-                <Statistic teksti="Positiivisia" arvo={ `${ prosentti() } %` } />
-            </div>
+            <table>
+                <tbody>
+                    <Statistic teksti="Hyvä" arvo={ this.props.hyva } />
+                    <Statistic teksti="Neutraali" arvo={ this.props.neutraali } />
+                    <Statistic teksti="Huono" arvo={ this.props.huono } />
+                    <Statistic teksti="Keskiarvo" arvo={ keskiarvo() } />
+                    <Statistic teksti="Positiivisia" arvo={ `${ prosentti() } %` } />
+                </tbody>
+            </table>
         )
     }
 
@@ -47,7 +45,7 @@ class Statistics extends React.Component {
 
 const Statistic = ({ teksti, arvo }) => {
     return (
-        <p>{ teksti } { arvo }</p>
+        <tr><td>{ teksti }</td><td>{ arvo }</td></tr>
     )
 }
 
