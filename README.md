@@ -26,3 +26,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 1.11 Unicafe osa 6
 - [x] 1.12 Anekdootit osa 1
 - [x] 1.13 Anekdootit osa 2
+- [x] 1.14 Anekdootit osa 3

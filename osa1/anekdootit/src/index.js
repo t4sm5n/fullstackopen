@@ -6,6 +6,7 @@ class App extends React.Component {
         super(props)
         this.state = {
             selected: 0,
+            paras: -1,
             pisteet: {
                 0: 0,
                 1: 0,
@@ -19,26 +20,35 @@ class App extends React.Component {
 
     randomiseSelected = () => {
         return () => {
-            this.setState({ selected: Math.floor( Math.random() * 6 ) })
+            this.setState({ selected: Math.floor( Math.random() * this.props.anecdotes.length ) })
         }
     }
 
     voteForAnecdote = () => {
-        console.log( this.state.pisteet )
+        let pisteet = Object.assign( {}, this.state.pisteet )
+        pisteet[ ( this.state.selected ) ] += 1
+
+        let keys = Object.keys( pisteet )
+        keys.sort( function( a, b ) {
+            return pisteet[b] - pisteet[a]
+        })
+
         return () => {
-            let pisteet = Object.assign( {}, this.state.pisteet )
-            pisteet[ ( this.state.selected ) ] += 1
-            this.setState({ pisteet })
+            this.setState({ pisteet, paras: keys[0] })
         }
     }
 
     render() {
+        console.log( this.state.pisteet )
+        console.log( this.state.paras )
         return (
             <div>
                 <h2>Anekdootit</h2>
-                <p>{ this.props.anecdotes[this.state.selected] }</p>
+                <p>{ this.props.anecdotes[ this.state.selected ] }</p>
                 <button onClick={ this.voteForAnecdote() }>Äänestä</button>
                 <button onClick={ this.randomiseSelected() }>Seuraava anekdootti</button>
+                <h2>Eniten ääniä saanut anekdootti</h2>
+                <p>{ this.props.anecdotes[ this.state.paras ] }</p>
             </div>
         )
     }
