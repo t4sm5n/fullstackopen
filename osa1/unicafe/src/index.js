@@ -13,13 +13,13 @@ class Statistics extends React.Component {
     }
 
     render() {
-        const keskiarvo = () => {
-            if( this.props.arvot.length === 0 ) {
-                return (
-                    0
-                )
-            }
+        if( this.props.arvot.length === 0 ) {
+            return (
+                <p>Ei yhtään palautetta annettu!</p>
+            )
+        }
 
+        const keskiarvo = () => {
             let summa = this.props.arvot.reduce(( previous, current ) => current += previous )
             let keskiarvo = summa / this.props.arvot.length
 
@@ -27,12 +27,6 @@ class Statistics extends React.Component {
         }
 
         const prosentti = () => {
-            if( this.props.arvot.length === 0 ) {
-                return (
-                    0
-                )
-            }
-            
             let prosentti = ( this.props.hyva / this.props.arvot.length ) * 100
 
             return Math.round( prosentti * 10 ) / 10
