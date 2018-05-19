@@ -62,24 +62,19 @@ class App extends React.Component {
         }
     }
   
+    palauteClick = ( palaute, arvo ) => {
+        return () => {
+            this.setState({
+                [palaute]: this.state[palaute] + 1,
+                arvot: this.state.arvot.concat( arvo )
+            })
+        }
+    }
+
     clickHyva = () => {
         this.setState({
             hyva: this.state.hyva + 1,
             arvot: this.state.arvot.concat( 1 )
-        })
-    }
-
-    clickNeutraali = () => {
-        this.setState({
-            neutraali: this.state.neutraali + 1,
-            arvot: this.state.arvot.concat( 0 )
-        })
-    }
-
-    clickHuono = () => {
-        this.setState({
-            huono: this.state.huono + 1,
-            arvot: this.state.arvot.concat( -1 )
         })
     }
   
@@ -89,9 +84,10 @@ class App extends React.Component {
                 <div>
                     <h2>Anna palautetta</h2>
                     <div>
-                        <Button onClick={ this.clickHyva } arvo="Hyvä" />
-                        <Button onClick={ this.clickNeutraali } arvo="Neutraali" />
-                        <Button onClick={ this.clickHuono } arvo="Huono" />
+                        <Button onClick={ this.palauteClick( "hyva", 1 ) } arvo="Hyvä" />
+                        <Button onClick={ this.palauteClick( "neutraali", 0 ) } arvo="Neutraali" />
+                        <Button onClick={ this.palauteClick( "huono", -1 ) } arvo="Huono" />
+                        
                     </div>
                     <h2>Statistiikka</h2>
                     <Statistics { ...this.state } />

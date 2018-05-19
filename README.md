@@ -22,3 +22,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 1.7 Unicafe osa 2
 - [x] 1.8 Unicafe osa 3
 - [x] 1.9 Unicafe osa 4
+- [x] 1.10 Unicafe osa 5
