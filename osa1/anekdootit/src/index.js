@@ -5,7 +5,15 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            selected: 0
+            selected: 0,
+            pisteet: {
+                0: 0,
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0
+            }
         }
     }
 
@@ -15,12 +23,21 @@ class App extends React.Component {
         }
     }
 
+    voteForAnecdote = () => {
+        console.log( this.state.pisteet )
+        return () => {
+            let pisteet = Object.assign( {}, this.state.pisteet )
+            pisteet[ ( this.state.selected ) ] += 1
+            this.setState({ pisteet })
+        }
+    }
+
     render() {
-        console.log( this.state.selected )
         return (
             <div>
                 <h2>Anekdootit</h2>
                 <p>{ this.props.anecdotes[this.state.selected] }</p>
+                <button onClick={ this.voteForAnecdote() }>Äänestä</button>
                 <button onClick={ this.randomiseSelected() }>Seuraava anekdootti</button>
             </div>
         )
