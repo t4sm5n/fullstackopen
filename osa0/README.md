@@ -1,4 +1,4 @@
-# Week 0
+# Osa 0
 
 ## 0.3 Muistiinpanojen sivu
 
