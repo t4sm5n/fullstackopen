@@ -27,3 +27,7 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 1.12 Anekdootit osa 1
 - [x] 1.13 Anekdootit osa 2
 - [x] 1.14 Anekdootit osa 3
+
+## Osa 2 ([Ratkaisut](osa2))
+
+- [x] 2.1 Kurssien sisältö
