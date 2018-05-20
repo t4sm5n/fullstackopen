@@ -97,3 +97,36 @@ sisältämä lista, ja joka noudattaa style sheetin
 määrittelemää ulkonäköä
 end note
 ```
+## 0.5 Single page app
+
+Single page app-sekvenssikaavio on samanlainen kuin tehtävän 0.3 sekvenssikaavio, paria polkua lukuunottamatta (https://fullstack-exampleapp.herokuapp.com/notes -> https://fullstack-exampleapp.herokuapp.com/spa ja main.js -> spa.js)
+## 0.6 Uusi muistiinpano SPA:ssa
+
+![sekvenssikaavio](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgU2luZ2xlIHBhZ2UgYXBwCgprYXl0dGFqYS0-c2VsYWluOgpub3RlIGxlZnQgb2YgAA8GCmvDpHl0dMOkasOkIGtpcmpvaXR0YWEgc2l2dWxsYSBvbGV2YW4gbG9tYWtrZWVuCnRla3N0aWtlbnR0w6TDpG4gaGFsdWFtYW5zYSBtdWlzdGlpbnBhbm9uIGphCnBhaW5hYSB0YWxsZXRhLW5hcHBpYQplbmQgbm90ZQoAgRIGLT5wYWx2ZWxpbjogUE9TVCBmdWxsc3RhY2stZXhhbXBsZWFwcC5oZXJva3VhcHAuY29tL25ld19ub3RlX3NwYQCBSQ4ARAgAVgcAgUgMdXVkZW4AgRYPbm90ZXMtCm5pbWlzZWVuIHRhdWx1a2tvb24sIHNla8OkIGzDpGhlAIFnBgoAgVEQIGFpa2FsZWltYW4AcQhtZWxsZSwKam9rYQCCRAx0aWVkb3QgZXNpbWVya2lrc2kgdGlldG8tCmthbnRhYW4uIHTDpG3DpG4gasOkbGtlZW4ga3V0c3V0YWFuIG1ldG9kaWEAUAdwaWlyAIJ4BQCCZA10IHNpc8OkbHTDpHbDpG4KbGlzdGFuAIFwBWxsZWVuLgCCbgoAgmgIAIQRCSBzdGF0dXMgMjAxLCBjcmVhdGVkAIJAF3B5c3kAg3MHZQBTByBzYW1hbGwAhCwJLAoAbAlvaGphdXN0YSBlaSB0YXBhaGR1IGVpa8OkCnNpdMOkIHRhcnZpdACECAs&s=default)
+```
+title Uusi muistiinpano SPA:ssa
+
+kayttaja->selain:
+note left of selain
+käyttäjä kirjoittaa sivulla olevan lomakkeen
+tekstikenttään haluamansa muistiinpanon ja
+painaa talleta-nappia
+end note
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note_spa
+note left of palvelin
+selain kirjoittaa uuden muistiinpanon notes-
+nimiseen taulukkoon, sekä lähettää
+muistiinpanon ja aikaleiman palvelimelle,
+joka kirjoittaa tiedot esimerkiksi tieto-
+kantaan. tämän jälkeen kutsutaan metodia,
+joka piirtää muistiinpanot sisältävän
+listan uudelleen.
+end note
+palvelin->selain: status 201, created
+note left of palvelin
+pysytään edelleen samalla sivulla,
+uudelleenohjausta ei tapahdu eikä
+sitä tarvita
+end note
+
+```
