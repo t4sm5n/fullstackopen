@@ -31,3 +31,5 @@ Course material available at <https://fullstackopen.github.io/>
 ## Osa 2 ([Ratkaisut](osa2))
 
 - [x] 2.1 Kurssien sisältö
+- [x] 2.2 Tehtävien määrä
+- [x] 2.3 Reduce
