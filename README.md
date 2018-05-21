@@ -34,3 +34,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 2.2 Tehtävien määrä
 - [x] 2.3 Reduce
 - [x] 2.4 Monta kurssia
+- [x] 2.5 Erillinen moduuli
