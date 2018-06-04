@@ -13,9 +13,21 @@ class App extends React.Component {
 
     addPerson = ( event ) => {
         event.preventDefault()
+
+        if( this.state.newName.length <= 0 ) {
+            alert( "Nimi ei saa olla tyhjä!" )
+            return
+        }
+
         const personObject = {
             name: this.state.newName,
             id: this.state.persons.length + 1
+        }
+
+        if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
+            alert( "Nimi on jo luettelossa!" )
+            this.setState({ newName: '' })
+            return
         }
 
         const persons = this.state.persons.concat( personObject )
