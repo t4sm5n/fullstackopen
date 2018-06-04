@@ -5,14 +5,14 @@ class App extends React.Component {
         super( props )
         this.state = {
             persons: [
-                { 
-                    name: 'Arto Hellas',
-                    number: '040-1234567',
-                    id: 1
-                }
+                { name: 'Arto Hellas', number: '040-1234567', id: 1 },
+                { name: 'Martti Tienari', number: '040-123456', id: 2 },
+                { name: 'Arto Järvinen', number: '040-123456', id: 3 },
+                { name: 'Lea Kutvonen', number: '040-123456', id: 4 }
             ],
             newName: '',
-            newNumber: ''
+            newNumber: '',
+            searchName: ''
         }
     }
 
@@ -49,7 +49,18 @@ class App extends React.Component {
         this.setState({ newNumber: event.target.value })
     }
 
+    handleSearchNameChange = ( event ) => {
+        this.setState({ searchName: event.target.value })
+    }
+
     render() {
+        const namesToShow =
+            this.state.searchName.length < 0 ?
+                this.state.persons :
+                this.state.persons.filter( person =>
+                    person.name.toLowerCase().includes( this.state.searchName.toLowerCase() )
+                )
+
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
@@ -71,9 +82,15 @@ class App extends React.Component {
                     </div>
                 </form>
                 <h2>Numerot</h2>
+                <div>
+                    Haku: <input
+                        value={ this.state.searchName }
+                        onChange={ this.handleSearchNameChange }
+                    />
+                </div>
                 <table>
                     <tbody>
-                        { this.state.persons.map( person =>
+                        { namesToShow.map( person =>
                             <tr key={ person.id }>
                                 <td>{ person.name }</td>
                                 <td>{ person.number }</td>
