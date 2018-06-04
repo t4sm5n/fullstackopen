@@ -1,6 +1,10 @@
 import React from 'react';
 
-class App extends React.Component {
+import AddPerson from './components/AddPerson.js'
+import FilterPersons from './components/FilterPersons.js'
+import PersonsTable from './components/PersonsTable.js'
+
+export default class App extends React.Component {
     constructor( props ) {
         super( props )
         this.state = {
@@ -64,43 +68,19 @@ class App extends React.Component {
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
-                <form onSubmit={ this.addPerson }>
-                    <div>
-                        Nimi: <input
-                            value={ this.state.newName }
-                            onChange={ this.handleNameChange }
-                        />
-                    </div>
-                    <div>
-                        Numero: <input
-                            value={ this.state.newNumber }
-                            onChange={ this.handeNumberChange }
-                        />
-                    </div>
-                    <div>
-                        <button type="submit">Lisää</button>
-                    </div>
-                </form>
+                <AddPerson  onSubmit={ this.addPerson }
+                            stateObject={ this.state }
+                            onNameChange={ this.handleNameChange }
+                            onNumberChange={ this.handeNumberChange } />
+
                 <h2>Numerot</h2>
-                <div>
-                    Haku: <input
-                        value={ this.state.searchName }
-                        onChange={ this.handleSearchNameChange }
-                    />
-                </div>
-                <table>
-                    <tbody>
-                        { namesToShow.map( person =>
-                            <tr key={ person.id }>
-                                <td>{ person.name }</td>
-                                <td>{ person.number }</td>
-                            </tr> 
-                        ) }
-                    </tbody>
-                </table>
+                <FilterPersons  stateObject={ this.state }
+                                onSearchNameChange={ this.handleSearchNameChange } />
+
+                <br/>
+                <PersonsTable   phoneBook={ namesToShow } />
+                
             </div>
         )
     }
 }
-
-export default App

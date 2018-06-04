@@ -39,3 +39,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 2.7 Puhelinluettelo osa 2
 - [x] 2.8 Puhelinluettelo osa 3
 - [x] 2.9 Puhelinluettelo osa 4
+- [x] 2.10 Puhelinluettelo osa 5
