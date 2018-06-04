@@ -37,3 +37,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 2.5 Erillinen moduuli
 - [x] 2.6 Puhelinluettelo osa 1
 - [x] 2.7 Puhelinluettelo osa 2
+- [x] 2.8 Puhelinluettelo osa 3
