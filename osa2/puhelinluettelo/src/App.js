@@ -1,60 +1,65 @@
 import React from 'react';
 
-import AddPerson from './components/AddPerson.js'
-import FilterPersons from './components/FilterPersons.js'
-import PersonsTable from './components/PersonsTable.js'
+import axios from 'axios';
+
+import AddPerson from './components/AddPerson.js';
+import FilterPersons from './components/FilterPersons.js';
+import PersonsTable from './components/PersonsTable.js';
 
 export default class App extends React.Component {
     constructor( props ) {
-        super( props )
+        super( props );
         this.state = {
-            persons: [
-                { name: 'Arto Hellas', number: '040-1234567', id: 1 },
-                { name: 'Martti Tienari', number: '040-123456', id: 2 },
-                { name: 'Arto Järvinen', number: '040-123456', id: 3 },
-                { name: 'Lea Kutvonen', number: '040-123456', id: 4 }
-            ],
+            persons: [],
             newName: '',
             newNumber: '',
             searchName: ''
-        }
+        };
+    }
+
+    componentDidMount() {
+        axios
+        .get( 'http://localhost:3001/persons' )
+        .then( response => {
+            this.setState({ persons: response.data });
+        } );
     }
 
     addPerson = ( event ) => {
-        event.preventDefault()
+        event.preventDefault();
 
         if( this.state.newName.length <= 0 || this.state.newNumber.length <= 0 ) {
-            alert( "Nimi ja numero eivät saa olla tyhjiä!" )
-            return
+            alert( "Nimi ja numero eivät saa olla tyhjiä!" );
+            return;
         }
 
         const personObject = {
             name: this.state.newName,
             number: this.state.newNumber,
             id: this.state.persons.length + 1
-        }
+        };
 
         if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
-            alert( "Nimi on jo luettelossa!" )
-            this.setState({ newName: '' })
-            return
+            alert( "Nimi on jo luettelossa!" );
+            this.setState({ newName: '' });
+            return;
         }
 
-        const persons = this.state.persons.concat( personObject )
-        this.setState({ persons, newName: '', newNumber: '' })
+        const persons = this.state.persons.concat( personObject );
+        this.setState({ persons, newName: '', newNumber: '' });
 
     }
 
     handleNameChange = ( event ) => {
-        this.setState({ newName: event.target.value })
+        this.setState({ newName: event.target.value });
     }
 
     handeNumberChange = ( event ) => {
-        this.setState({ newNumber: event.target.value })
+        this.setState({ newNumber: event.target.value });
     }
 
     handleSearchNameChange = ( event ) => {
-        this.setState({ searchName: event.target.value })
+        this.setState({ searchName: event.target.value });
     }
 
     render() {
@@ -63,7 +68,7 @@ export default class App extends React.Component {
                 this.state.persons :
                 this.state.persons.filter( person =>
                     person.name.toLowerCase().includes( this.state.searchName.toLowerCase() )
-                )
+                );
 
         return (
             <div>
@@ -81,6 +86,6 @@ export default class App extends React.Component {
                 <PersonsTable   phoneBook={ namesToShow } />
                 
             </div>
-        )
+        );
     }
 }
