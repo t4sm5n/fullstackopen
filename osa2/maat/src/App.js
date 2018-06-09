@@ -23,9 +23,11 @@ export default class App extends Component {
 		this.setState({ searchTerm: event.target.value }); 
 	}
 
-	render() {
-		console.log( this.state.countries.length );
+	handleResultClick = ( countryName ) => {
+		this.setState({ searchTerm: countryName.toLowerCase() });
+	}
 
+	render() {
 		const SingleCountry = ({ country }) => (
 			<div>
 				<h1>{ country.name + " " + country.nativeName }</h1>
@@ -62,7 +64,9 @@ export default class App extends Component {
 					{ matchingCountries.length === 1 ? (
 						<SingleCountry country={ matchingCountries[0] } />
 					) : ( 
-						matchingCountries.map( country => <div key={ country.alpha3Code } >{ country.name }</div> )
+						matchingCountries.map( country =>
+							<div onClick={ () => this.handleResultClick( country.name ) } key={ country.alpha3Code } >{ country.name }</div>
+						)
 					) }
 					{ searchTip.length > 0 ? (
 						<p>{ searchTip }</p>
