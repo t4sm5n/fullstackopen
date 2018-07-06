@@ -6,6 +6,8 @@ import AddPerson from './components/AddPerson.js';
 import FilterPersons from './components/FilterPersons.js';
 import PersonsTable from './components/PersonsTable.js';
 
+const baseUrl = "http://localhost:3001/persons";
+
 export default class App extends React.Component {
     constructor( props ) {
         super( props );
@@ -19,7 +21,7 @@ export default class App extends React.Component {
 
     componentDidMount() {
         axios
-        .get( 'http://localhost:3001/persons' )
+        .get( baseUrl )
         .then( response => {
             this.setState({ persons: response.data });
         } );
@@ -35,8 +37,7 @@ export default class App extends React.Component {
 
         const personObject = {
             name: this.state.newName,
-            number: this.state.newNumber,
-            id: this.state.persons.length + 1
+            number: this.state.newNumber
         };
 
         if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
@@ -45,8 +46,15 @@ export default class App extends React.Component {
             return;
         }
 
-        const persons = this.state.persons.concat( personObject );
-        this.setState({ persons, newName: '', newNumber: '' });
+        axios
+            .post( baseUrl, personObject )
+            .then( response => {
+                this.setState( {
+                    persons: this.state.persons.concat( response.data ),
+                    newName: '',
+                    newNumber: ''
+                } );
+            } )
 
     }
 
