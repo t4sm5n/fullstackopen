@@ -1,12 +1,10 @@
 import React from 'react';
 
-import axios from 'axios';
-
 import AddPerson from './components/AddPerson.js';
 import FilterPersons from './components/FilterPersons.js';
 import PersonsTable from './components/PersonsTable.js';
 
-const baseUrl = "http://localhost:3001/persons";
+import personService from './services/persons.js';
 
 export default class App extends React.Component {
     constructor( props ) {
@@ -20,11 +18,11 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        axios
-        .get( baseUrl )
-        .then( response => {
-            this.setState({ persons: response.data });
-        } );
+        personService
+            .getAll()
+            .then( response => {
+                this.setState( { persons: response } );
+            } );
     }
 
     addPerson = ( event ) => {
@@ -46,11 +44,11 @@ export default class App extends React.Component {
             return;
         }
 
-        axios
-            .post( baseUrl, personObject )
-            .then( response => {
+        personService
+            .create( personObject )
+            .then( newPerson => {
                 this.setState( {
-                    persons: this.state.persons.concat( response.data ),
+                    persons: this.state.persons.concat( newPerson ),
                     newName: '',
                     newNumber: ''
                 } );
