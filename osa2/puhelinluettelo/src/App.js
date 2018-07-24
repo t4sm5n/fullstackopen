@@ -1,10 +1,10 @@
 import React from 'react';
 
-import axios from 'axios';
-
 import AddPerson from './components/AddPerson.js';
 import FilterPersons from './components/FilterPersons.js';
 import PersonsTable from './components/PersonsTable.js';
+
+import personService from './services/persons.js';
 
 export default class App extends React.Component {
     constructor( props ) {
@@ -18,11 +18,11 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        axios
-        .get( 'http://localhost:3001/persons' )
-        .then( response => {
-            this.setState({ persons: response.data });
-        } );
+        personService
+            .getAll()
+            .then( response => {
+                this.setState( { persons: response } );
+            } );
     }
 
     addPerson = ( event ) => {
@@ -35,8 +35,7 @@ export default class App extends React.Component {
 
         const personObject = {
             name: this.state.newName,
-            number: this.state.newNumber,
-            id: this.state.persons.length + 1
+            number: this.state.newNumber
         };
 
         if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
@@ -45,8 +44,15 @@ export default class App extends React.Component {
             return;
         }
 
-        const persons = this.state.persons.concat( personObject );
-        this.setState({ persons, newName: '', newNumber: '' });
+        personService
+            .create( personObject )
+            .then( newPerson => {
+                this.setState( {
+                    persons: this.state.persons.concat( newPerson ),
+                    newName: '',
+                    newNumber: ''
+                } );
+            } )
 
     }
 
