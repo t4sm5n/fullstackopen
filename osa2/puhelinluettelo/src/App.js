@@ -58,15 +58,26 @@ export default class App extends React.Component {
 
     handleNameChange = ( event ) => {
         this.setState({ newName: event.target.value });
-    }
+    };
 
     handeNumberChange = ( event ) => {
         this.setState({ newNumber: event.target.value });
-    }
+    };
 
     handleSearchNameChange = ( event ) => {
         this.setState({ searchName: event.target.value });
-    }
+    };
+
+    onDeleteClick = ( id ) => {
+        return () => {
+            let name = this.state.persons.find( person => person.id === id ).name
+            if( window.confirm( `Poistetaanko ${ name }?` ) ) {
+                personService
+                    .remove( id )
+                    .then( this.setState( { persons: this.state.persons.filter( person => person.id !== id ) } ) );
+            }
+        }
+    };
 
     render() {
         const namesToShow =
@@ -89,7 +100,8 @@ export default class App extends React.Component {
                                 onSearchNameChange={ this.handleSearchNameChange } />
 
                 <br/>
-                <PersonsTable   phoneBook={ namesToShow } />
+                <PersonsTable   phoneBook={ namesToShow } 
+                                onDeleteClick={ this.onDeleteClick } />
                 
             </div>
         );
