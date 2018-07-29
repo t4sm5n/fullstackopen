@@ -1,14 +1,9 @@
 {
   "persons": [
     {
-      "name": "asd",
-      "number": "123",
+      "name": "Tuomas Mäkinen",
+      "number": "045-1255224",
       "id": 1
-    },
-    {
-      "name": "zdfjn",
-      "number": "326",
-      "id": 4
     }
   ]
 }

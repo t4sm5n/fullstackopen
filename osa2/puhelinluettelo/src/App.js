@@ -39,8 +39,23 @@ export default class App extends React.Component {
         };
 
         if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
-            alert( "Nimi on jo luettelossa!" );
-            this.setState({ newName: '' });
+            if( window.confirm( `${ personObject.name } on jo luettelossa, korvataanko vanha numero uudella?` ) ) {
+                personObject.id = this.state.persons.find( person => person.name === personObject.name ).id;
+                personService
+                    .modify( personObject )
+                    .then( modifiedPerson => {
+                        this.setState( {
+                            persons: this.state.persons.map( person =>
+                                person.id === modifiedPerson.id
+                                    ? Object.assign( {}, person, { number: modifiedPerson.number } )
+                                    : person
+                            ),
+                            newName: "",
+                            newNumber: ""
+                        } );
+                    } );
+            }
+
             return;
         }
 
