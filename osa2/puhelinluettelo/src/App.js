@@ -41,7 +41,8 @@ export default class App extends React.Component {
 
         if( this.state.persons.filter( person => person.name === personObject.name ).length > 0 ) {
             if( window.confirm( `${ personObject.name } on jo luettelossa, korvataanko vanha numero uudella?` ) ) {
-                personObject.id = this.state.persons.find( person => person.name === personObject.name ).id;
+				let id = this.state.persons.find( person => person.name === personObject.name ).id;
+                personObject.id = id;
                 personService
                     .modify( personObject )
                     .then( modifiedPerson => {
@@ -56,9 +57,27 @@ export default class App extends React.Component {
 							notificationMessage: `Muokattiin ${ modifiedPerson.name }`
 						} );
 						setTimeout( () => {
-							this.setState( { notificationMessage: null } )
-						}, 5000 );
-                    } );
+							this.setState( { notificationMessage: null } );
+						}, 2500 );
+					} )
+					.catch( error => {
+						this.setState( {
+							notificationMessage: `${ personObject.name } oli jo poistettu, lisätään uutena`,
+							persons: this.state.persons.filter( person => person.id !== id )
+						} );
+						personService
+							.create( personObject )
+							.then( newPerson => {
+								this.setState( {
+									persons: this.state.persons.concat( newPerson ),
+									newName: '',
+									newNumber: ''
+								} );
+							} )
+						setTimeout( () => {
+							this.setState( { notificationMessage: null } );
+						}, 2500 );
+					} );
             }
 
             return;
@@ -75,7 +94,7 @@ export default class App extends React.Component {
 				} );
 				setTimeout( () => {
 					this.setState( { notificationMessage: null } )
-				}, 5000 );
+				}, 2500 );
             } )
 
     }
@@ -105,7 +124,7 @@ export default class App extends React.Component {
 						} );
 						setTimeout( () => {
 							this.setState( { notificationMessage: null } )
-						}, 5000 );
+						}, 2500 );
 					} );
             }
         }
