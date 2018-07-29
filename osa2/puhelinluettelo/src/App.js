@@ -3,7 +3,7 @@ import React from 'react';
 import AddPerson from './components/AddPerson.js';
 import FilterPersons from './components/FilterPersons.js';
 import PersonsTable from './components/PersonsTable.js';
-
+import Notification from './components/Notification';
 import personService from './services/persons.js';
 
 export default class App extends React.Component {
@@ -13,7 +13,8 @@ export default class App extends React.Component {
             persons: [],
             newName: '',
             newNumber: '',
-            searchName: ''
+			searchName: '',
+			notificationMessage: null
         };
     }
 
@@ -51,8 +52,12 @@ export default class App extends React.Component {
                                     : person
                             ),
                             newName: "",
-                            newNumber: ""
-                        } );
+                            newNumber: "",
+							notificationMessage: `Muokattiin ${ modifiedPerson.name }`
+						} );
+						setTimeout( () => {
+							this.setState( { notificationMessage: null } )
+						}, 5000 );
                     } );
             }
 
@@ -65,8 +70,12 @@ export default class App extends React.Component {
                 this.setState( {
                     persons: this.state.persons.concat( newPerson ),
                     newName: '',
-                    newNumber: ''
-                } );
+					newNumber: '',
+					notificationMessage: `Lisättiin ${ newPerson.name }`
+				} );
+				setTimeout( () => {
+					this.setState( { notificationMessage: null } )
+				}, 5000 );
             } )
 
     }
@@ -89,7 +98,15 @@ export default class App extends React.Component {
             if( window.confirm( `Poistetaanko ${ name }?` ) ) {
                 personService
                     .remove( id )
-                    .then( this.setState( { persons: this.state.persons.filter( person => person.id !== id ) } ) );
+                    .then( status => {
+						this.setState( {
+							persons: this.state.persons.filter( person => person.id !== id ),
+							notificationMessage: `Poistettiin ${ name }`
+						} );
+						setTimeout( () => {
+							this.setState( { notificationMessage: null } )
+						}, 5000 );
+					} );
             }
         }
     };
@@ -105,6 +122,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <h2>Puhelinluettelo</h2>
+				<Notification message={ this.state.notificationMessage } />
                 <AddPerson  onSubmit={ this.addPerson }
                             stateObject={ this.state }
                             onNameChange={ this.handleNameChange }
