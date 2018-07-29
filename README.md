@@ -45,3 +45,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 2.13 Maiden tiedot klikkaamalla
 - [x] 2.14 Puhelinluettelo osa 7
 - [x] 2.15 Puhelinluettelo osa 8
+- [x] 2.16 Puhelinluettelo osa 9 
