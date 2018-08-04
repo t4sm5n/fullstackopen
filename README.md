@@ -49,3 +49,12 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 2.17 Puhelinluettelo osa 10
 - [x] 2.18 Puhelinluettelo osa 11
 - [x] 2.19 Puhelinluettelo osa 12
+
+## Osa 3 ([Ratkaisut](osa3))
+
+- [x] 3.1 Puhelinluettelon backend osa 1
+- [x] 3.2 Puhelinluettelon backend osa 2
+- [x] 3.3 Puhelinluettelon backend osa 3
+- [x] 3.4 Puhelinluettelon backend osa 4
+- [x] 3.5 Puhelinluettelon backend osa 5
+- [x] 3.6 Puhelinluettelon backend osa 6
