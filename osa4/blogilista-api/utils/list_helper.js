@@ -28,8 +28,32 @@ const favouriteBlog = ( blogs ) => {
 	};
 };
 
+const mostBlogs = ( blogs ) => {
+	if ( blogs.length === 0 ) {
+		return undefined;
+	}
+
+	const reducer = ( previous, current, index, array ) => {
+		return ( array.filter( item => item === previous ).length >= array.filter( item => item === current ).length ) ? previous : current
+	};
+
+	const author = blogs
+		.map( blog => blog.author )
+		.reduce( reducer );
+
+	const amount = blogs
+		.filter( blog => blog.author === author )
+		.length;
+
+	return {
+		author,
+		blogs: amount
+	}
+};
+
 module.exports = {
 	dummy,
 	totalLikes,
-	favouriteBlog
+	favouriteBlog,
+	mostBlogs
 };
