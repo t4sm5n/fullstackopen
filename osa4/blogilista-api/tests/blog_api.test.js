@@ -79,6 +79,23 @@ describe( 'post \'/api/blogs\'', () => {
 		expect( titles ).toContain( 'Master Data Management pähkinänkuoressa' );
 	} );
 
+	test( 'likes defaults to zero if no value specified', async () => {
+		const newBlog = {
+			title: 'Master Data Management pähkinänkuoressa',
+			author: 'Jarkko Vähäkangas',
+			url: 'https://www.alfame.com/blog/master-data-management-pahkinankuoressa'
+		};
+
+		const addedBlog = await api
+			.post( '/api/blogs' )
+			.send( newBlog )
+			.expect( 201 )
+			.expect( 'Content-Type', /application\/json/ );
+
+		expect( addedBlog.body.likes ).toBe( 0 );
+
+	} );
+
 } );
 
 afterAll( () => {
