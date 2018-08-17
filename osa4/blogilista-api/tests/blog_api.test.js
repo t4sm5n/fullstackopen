@@ -96,6 +96,26 @@ describe( 'post \'/api/blogs\'', () => {
 
 	} );
 
+	test( 'invalid blog can\'t be added', async () => {
+		const newBlog = {
+			author: 'Jarkko Vähäkangas'
+		};
+
+		const initialBlogs = await api
+			.get( '/api/blogs' );
+
+		await api
+			.post( '/api/blogs' )
+			.send( newBlog )
+			.expect( 400 );
+
+		const response = await api
+			.get( '/api/blogs' );
+
+		expect( response.body.length ).toBe( initialBlogs.body.length );
+
+	} );
+
 } );
 
 afterAll( () => {

@@ -10,6 +10,10 @@ blogsRouter.post( '/', async ( request, response ) => {
 	try {
 		const body = request.body;
 
+		if ( !body.author || !body.url ) {
+			return response.status( 400 ).json({ error: 'author and url are required' });
+		}
+
 		const blog = new Blog( {
 			title: body.title,
 			author: body.author,
