@@ -1,6 +1,7 @@
 const supertest = require( 'supertest' );
 const { app, server } = require( '../index' );
 const api = supertest( app );
+const Blog = require( '../modules/blog' );
 const helper = require( './test_helper' );
 
 beforeEach( async () => {
@@ -90,6 +91,36 @@ describe( 'post \'/api/blogs\'', () => {
 			.get( '/api/blogs' );
 
 		expect( response.body.length ).toBe( helper.initialBlogs.length );
+
+	} );
+
+} );
+
+describe( 'delete \'/api/blogs\'', async () => {
+
+	test( 'delete blog', async () => {
+		const addedBlog = new Blog( {
+			title: 'Master Data Management pähkinänkuoressa',
+			author: 'Jarkko Vähäkangas',
+			url: 'https://www.alfame.com/blog/master-data-management-pahkinankuoressa',
+			likes: 12
+		} );
+
+		await addedBlog.save();
+
+		const blogsBefore = await helper.blogsInDatabase();
+
+		await api
+			.delete( `/api/blogs/${ addedBlog._id }` )
+			.expect( 204 );
+
+
+		const blogsAfter = await helper.blogsInDatabase();
+
+		const titles = blogsAfter.map( blog => blog.title );
+
+		expect( titles ).not.toContain( addedBlog.title );
+		expect( blogsAfter.length ).toBe( blogsBefore.length - 1 );
 
 	} );
 
