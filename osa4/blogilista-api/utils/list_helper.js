@@ -51,9 +51,30 @@ const mostBlogs = ( blogs ) => {
 	}
 };
 
+const mostLikes = ( blogs ) => {
+	if ( blogs.length === 0 ) {
+		return undefined;
+	}
+
+	const reducer = ( previous, current, index, array ) => {
+		let previousAuthorsBlogs = array.filter( blog => blog.author === previous.author );
+		let currentAuthorsBlogs = array.filter( blog => blog.author === current.author );
+		return ( totalLikes( previousAuthorsBlogs ) >= totalLikes( currentAuthorsBlogs ) ? previous : current );
+	};
+
+	const author = blogs.reduce( reducer, 0 ).author;
+
+	return {
+		author,
+		likes: totalLikes( blogs.filter( blog => blog.author === author ) )
+	};
+
+};
+
 module.exports = {
 	dummy,
 	totalLikes,
 	favouriteBlog,
-	mostBlogs
+	mostBlogs,
+	mostLikes
 };

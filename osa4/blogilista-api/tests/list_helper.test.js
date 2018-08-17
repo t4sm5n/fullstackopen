@@ -2,6 +2,7 @@ const dummy = require( '../utils/list_helper' ).dummy;
 const totalLikes = require( '../utils/list_helper' ).totalLikes;
 const favouriteBlog = require( '../utils/list_helper' ).favouriteBlog;
 const mostBlogs = require( '../utils/list_helper' ).mostBlogs;
+const mostLikes = require( '../utils/list_helper' ).mostLikes;
 
 test( 'dummy is called', () => {
 	const blogs = [];
@@ -79,6 +80,33 @@ describe( 'most blogs', () => {
 		expect( result ).toEqual( {
 			author: "Robert C. Martin",
 			blogs: 3
+		} )
+	} );
+
+} );
+
+describe( 'most likes', () => {
+	test( 'when list has no blogs, equal undefined', () => {
+		const result = mostLikes([]);
+		expect( result ).toEqual( undefined ) ;
+	} );
+
+	test( 'when list has only one blog, equal that blogs author', () => {
+		const listOfOneBlog = blogs.slice( 0, 1 );
+		const result = mostLikes( listOfOneBlog );
+		const blog = listOfOneBlog[0];
+
+		expect( result ).toEqual( {
+			author: blog.author,
+			likes: blog.likes
+		} );
+	} );
+
+	test( 'when list has many blogs, equal the author who has the most likes', () => {
+		const result = mostLikes( blogs );
+		expect( result ).toEqual( {
+			author: "Edsger W. Dijkstra",
+			likes: 17
 		} )
 	} );
 
