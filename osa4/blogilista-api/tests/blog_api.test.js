@@ -1,30 +1,11 @@
 const supertest = require( 'supertest' );
 const { app, server } = require( '../index' );
 const api = supertest( app );
-const Blog = require( '../modules/blog' );
+const helper = require( './test_helper' );
 
-const initialBlogs = [
-	{
-		title: 'API:t käytännössä - selkokielinen katsaus',
-		author: 'Jani Haglund',
-		url: 'https://www.alfame.com/blog/apit-kaytannossa-selkokielinen-katsaus',
-		likes: 42
-	},
-	{
-		title: 'Estä liiketoimintanne riskit prosessien automatisoinnilla!',
-		author: 'Janne Tirkkonen',
-		url: 'https://www.alfame.com/blog/esta-liiketoimintanne-riskit-prosessien-automatisoinnilla',
-		likes: 36
-	}
-];
-
-beforeAll( async () => {
-	await Blog.remove( {} );
-
-	for ( let blog of initialBlogs ) {
-		let blogObject = new Blog( blog );
-		await blogObject.save();
-	}
+beforeEach( async () => {
+	await helper.purgeDatabase();
+	await helper.initDatabase();
 } );
 
 describe( 'get \'/api/blogs\'', () => {
@@ -40,7 +21,7 @@ describe( 'get \'/api/blogs\'', () => {
 		const response = await api
 			.get( '/api/blogs' );
 
-		expect( response.body.length ).toBe( initialBlogs.length );
+		expect( response.body.length ).toBe( helper.initialBlogs.length );
 	} );
 
 	test( 'a specific blog is within the returned blogs', async () => {
@@ -64,19 +45,18 @@ describe( 'post \'/api/blogs\'', () => {
 			likes: 56
 		};
 
+		const blogsBefore = await helper.blogsInDatabase();
+
 		await api
 			.post( '/api/blogs' )
 			.send( newBlog )
 			.expect( 201 )
 			.expect( 'Content-Type', /application\/json/ );
 
-		const response = await api
-			.get( '/api/blogs' );
+		const blogsAfter = await helper.blogsInDatabase();
 
-		const titles = response.body.map( r => r.title );
-
-		expect( response.body.length ).toBe( initialBlogs.length + 1 );
-		expect( titles ).toContain( 'Master Data Management pähkinänkuoressa' );
+		expect( blogsAfter.length ).toBe( blogsBefore.length + 1 );
+		expect( blogsAfter.map( b => b.title ) ).toContain( newBlog.title );
 	} );
 
 	test( 'likes defaults to zero if no value specified', async () => {
@@ -101,9 +81,6 @@ describe( 'post \'/api/blogs\'', () => {
 			author: 'Jarkko Vähäkangas'
 		};
 
-		const initialBlogs = await api
-			.get( '/api/blogs' );
-
 		await api
 			.post( '/api/blogs' )
 			.send( newBlog )
@@ -112,7 +89,7 @@ describe( 'post \'/api/blogs\'', () => {
 		const response = await api
 			.get( '/api/blogs' );
 
-		expect( response.body.length ).toBe( initialBlogs.body.length );
+		expect( response.body.length ).toBe( helper.initialBlogs.length );
 
 	} );
 
