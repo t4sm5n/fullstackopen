@@ -19,7 +19,7 @@ const initialBlogs = [
 ];
 
 beforeAll( async () => {
-	await Blog.remove({});
+	await Blog.remove( {} );
 
 	for ( let blog of initialBlogs ) {
 		let blogObject = new Blog( blog );
@@ -27,27 +27,58 @@ beforeAll( async () => {
 	}
 } );
 
-test( 'blogs are returned as json', async () => {
-	await api
-		.get( '/api/blogs' )
-		.expect( 200 )
-		.expect( 'Content-Type', /application\/json/ );
+describe( 'get \'/api/blogs\'', () => {
+
+	test( 'blogs are returned as json', async () => {
+		await api
+			.get( '/api/blogs' )
+			.expect( 200 )
+			.expect( 'Content-Type', /application\/json/ );
+	} );
+
+	test( 'all blogs are returned', async () => {
+		const response = await api
+			.get( '/api/blogs' );
+
+		expect( response.body.length ).toBe( initialBlogs.length );
+	} );
+
+	test( 'a specific blog is within the returned blogs', async () => {
+		const response = await api
+			.get( '/api/blogs' );
+
+		const titles = response.body.map( r => r.title );
+
+		expect( titles ).toContain( 'API:t käytännössä - selkokielinen katsaus' );
+	} );
+
 } );
 
-test( 'all blogs are returned', async () => {
-	const response = await api
-		.get( '/api/blogs' );
+describe( 'post \'/api/blogs\'', () => {
 
-	expect( response.body.length ).toBe( initialBlogs.length );
-} );
+	test( 'a valid blog can be added', async () => {
+		const newBlog = {
+			title: 'Master Data Management pähkinänkuoressa',
+			author: 'Jarkko Vähäkangas',
+			url: 'https://www.alfame.com/blog/master-data-management-pahkinankuoressa',
+			likes: 56
+		};
 
-test( 'a specific blog is within the returned blogs', async () => {
-	const response = await api
-		.get( '/api/blogs' );
+		await api
+			.post( '/api/blogs' )
+			.send( newBlog )
+			.expect( 201 )
+			.expect( 'Content-Type', /application\/json/ );
 
-	const titles = response.body.map( r => r.title );
+		const response = await api
+			.get( '/api/blogs' );
 
-	expect( titles ).toContain( 'API:t käytännössä - selkokielinen katsaus' );
+		const titles = response.body.map( r => r.title );
+
+		expect( response.body.length ).toBe( initialBlogs.length + 1 );
+		expect( titles ).toContain( 'Master Data Management pähkinänkuoressa' );
+	} );
+
 } );
 
 afterAll( () => {
