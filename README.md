@@ -75,7 +75,7 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 3.21 Eriytetty sovelluskehitys- ja tuotantotietokanta
 - [x] 3.22 lint-konfiguraatio
 
-## Osa 4 ([Ratkaisut](osa3))
+## Osa 4 ([Ratkaisut](osa4))
 
 - [x] 4.1 Blogilista, osa 1
 - [x] 4.2 Blogilista, osa 2
