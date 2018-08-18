@@ -5,7 +5,8 @@ const userSchema = new Schema( {
 	name: String,
 	username: String,
 	passwordHash: String,
-	adult: Boolean
+	adult: Boolean,
+	blogs: [{ type: Schema.Types.ObjectId, ref: 'Blog' }]
 } );
 
 userSchema.statics.format = function( user ) {
@@ -14,7 +15,8 @@ userSchema.statics.format = function( user ) {
 		username: user.username,
 		passwordHash: user.passwordHash,
 		adult: user.adult,
-		id: user._id
+		id: user._id,
+		blogs: user.blogs
 	};
 };
 
@@ -23,7 +25,8 @@ userSchema.statics.formatNoPasswordHash = function( user ) {
 		name: user.name,
 		username: user.username,
 		adult: user.adult,
-		id: user._id
+		id: user._id,
+		blogs: user.blogs
 	};
 };
 
