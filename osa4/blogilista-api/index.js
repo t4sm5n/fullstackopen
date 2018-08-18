@@ -9,6 +9,7 @@ const blogsRouter = require( './controllers/blogs' );
 const usersRouter = require( './controllers/users' );
 const loginRouter = require( './controllers/login' );
 const config = require( './utils/config' );
+const middleware = require( './utils/middleware' );
 
 morgan.token( 'body', ( request, response ) => {
 	return JSON.stringify( request.body );
@@ -26,6 +27,7 @@ mongoose
 app.use( cors() );
 app.use( bodyParser.json() );
 app.use( morgan( ':method :url :body :status :res[content-length] - :response-time ms' ) );
+app.use( middleware.tokenExtractor );
 
 app.use( '/api/blogs', blogsRouter );
 app.use( '/api/users', usersRouter );
