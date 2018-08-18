@@ -58,7 +58,43 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 3.4 Puhelinluettelon backend osa 4
 - [x] 3.5 Puhelinluettelon backend osa 5
 - [x] 3.6 Puhelinluettelon backend osa 6
-- [x] 3.6 Puhelinluettelon backend osa 7
-- [x] 3.6 Puhelinluettelon backend osa 8
-- [x] 3.6 Puhelinluettelon backend osa 9
-- [x] 3.6 Puhelinluettelon backend osa 10
+- [x] 3.7 Puhelinluettelon backend osa 7
+- [x] 3.8 Puhelinluettelon backend osa 8
+- [x] 3.9 Puhelinluettelon backend osa 9
+- [x] 3.10 Puhelinluettelon backend osa 10
+- [x] 3.11 Puhelinluettelo full stack
+- [x] 3.12 Tietokanta komentoriviltä
+- [x] 3.13 Puhelinluettelo ja tietokanta, osa 1
+- [x] 3.14 Puhelinluettelo ja tietokanta, osa 2
+- [x] 3.15 Puhelinluettelo ja tietokanta, osa 3
+- [x] 3.16 Puhelinluettelo ja tietokanta, osa 4
+- [x] 3.17 Puhelinluettelo ja tietokanta, osa 5
+- [x] 3.18 Puhelinluettelo ja tietokanta, osa 6
+- [x] 3.19 Puhelinluettelo ja tietokanta, osa 7
+- [x] 3.20 Tietokantaa käyttävä versio internettiin
+- [x] 3.21 Eriytetty sovelluskehitys- ja tuotantotietokanta
+- [x] 3.22 lint-konfiguraatio
+
+## Osa 4 ([Ratkaisut](osa3))
+
+- [x] 4.1 Blogilista, osa 1
+- [x] 4.2 Blogilista, osa 2
+- [x] 4.3 Apufunktioita ja yksikkötestejä, osa 1
+- [x] 4.4 Apufunktioita ja yksikkötestejä, osa 2
+- [x] 4.5 Apufunktioita ja yksikkötestejä, osa 3
+- [x] 4.6 Apufunktioita ja yksikkötestejä, osa 4
+- [x] 4.7 Apufunktioita ja yksikkötestejä, osa 5
+- [x] 4.8 Blogilistan testit, osa 1
+- [x] 4.9 Blogilistan testit, osa 2
+- [x] 4.10 Blogilistan testit, osa 3
+- [x] 4.11 Blogilistan testit, osa 4
+- [x] 4.12 Blogilistan laajennus, osa 1
+- [x] 4.13 Blogilistan laajennus, osa 2
+- [x] 4.14 Blogilistan laajennus, osa 3
+- [x] 4.15 Blogilistan laajennus, osa 4
+- [x] 4.16 Blogilistan laajennus, osa 5
+- [x] 4.17 Blogilistan laajennus, osa 6
+- [x] 4.18 Blogilistan laajennus, osa 7
+- [x] 4.19 Blogilistan laajennus, osa 8
+- [x] 4.20 Blogilistan laajennus, osa 9
+- [x] 4.21 Blogilistan laajennus, osa 10
