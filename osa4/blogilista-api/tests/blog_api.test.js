@@ -1,7 +1,7 @@
 const supertest = require( 'supertest' );
 const { app, server } = require( '../index' );
 const api = supertest( app );
-const Blog = require( '../modules/blog' );
+const Blog = require( '../models/blog' );
 const helper = require( './test_helper' );
 
 beforeEach( async () => {
