@@ -1,4 +1,5 @@
 const Blog = require( '../models/blog' );
+const User = require( '../models/user' );
 
 const initialBlogs = [
 	{
@@ -36,6 +37,11 @@ const initDatabase = async () => {
 	return await Blog.insertMany( initialBlogs );
 };
 
+const usersInDatabase = async () => {
+	const users = await User.find({});
+	return users.map( User.formatNoPasswordHash );
+};
+
 module.exports = {
-	initialBlogs, nonExistingId, blogsInDatabase, purgeDatabase, initDatabase
+	initialBlogs, nonExistingId, blogsInDatabase, purgeDatabase, initDatabase, usersInDatabase
 };
