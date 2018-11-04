@@ -89,6 +89,22 @@ class App extends React.Component {
 		}
 	};
 
+	delete = async (blog) => {
+		if ( window.confirm(`delete "${blog.title}" by ${blog.author}?`) ) {
+			const response = await blogService.remove(blog.id);
+
+			if ( response === 204 ) {
+				let blogs = this.state.blogs.filter( b => {
+					return b.id !== blog.id;
+				});
+
+				this.setState({
+					blogs: blogs
+				});
+			}
+		}
+	};
+
 	handleLoginFieldChange = ( event ) => {
 		this.setState({ form: { ...this.state.form, [ event.target.name ]: event.target.value } });
 	};
@@ -176,7 +192,7 @@ class App extends React.Component {
 				<h2>Blogs</h2>
 				<div>
 					{this.state.blogs.map( blog =>
-						<Blog key={blog.id} blog={blog}/>
+						<Blog key={blog.id} blog={blog} delete={this.delete}/>
 					)}
 				</div>
 			</div>

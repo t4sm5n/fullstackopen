@@ -52,8 +52,9 @@ class Blog extends React.Component {
 								<button onClick={this.like}>like</button>
 							</div>
 							<div>
-								added by {this.state.blog.user.name}
+								added by {this.state.blog.user !== undefined ? this.state.blog.user.name : 'anonymous'}
 							</div>
+							<button onClick={() => this.props.delete(this.state.blog)}>delete</button>
 						</div>
 					</div> :
 					<div>
