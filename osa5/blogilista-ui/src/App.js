@@ -192,7 +192,12 @@ class App extends React.Component {
 				<h2>Blogs</h2>
 				<div>
 					{this.state.blogs.map( blog =>
-						<Blog key={blog.id} blog={blog} delete={this.delete}/>
+						<Blog
+							key={blog.id}
+							blog={blog}
+							delete={this.delete}
+							user={this.state.user}
+						/>
 					)}
 				</div>
 			</div>
