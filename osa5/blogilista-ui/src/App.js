@@ -5,6 +5,8 @@ import Notification from './components/Notification';
 
 import blogService from './services/blogs';
 import loginService from './services/login';
+import LoginForm from './components/Login';
+import Togglable from './components/Togglable';
 
 class App extends React.Component {
 	constructor( props ) {
@@ -24,8 +26,8 @@ class App extends React.Component {
 				title: '',
 				author: '',
 				url: ''
-			}
-
+			},
+			loginVisible: false
 		}
 	}
 
@@ -104,30 +106,14 @@ class App extends React.Component {
 
 	render() {
 		const loginForm = () => (
-			<div>
-				<h2>Log in to application</h2>
-				<form onSubmit={ this.login }>
-					<div>
-						username:
-						<input
-							type="text"
-							name="username"
-							value={ this.state.form.username }
-							onChange={ this.handleLoginFieldChange }
-						/>
-					</div>
-					<div>
-						password:
-						<input
-							type="password"
-							name="password"
-							value={ this.state.form.password }
-							onChange={ this.handleLoginFieldChange }
-						/>
-					</div>
-					<button type="submit">kirjaudu</button>
-				</form>
-			</div>
+			<Togglable buttonLabel="login">
+				<LoginForm
+					username={this.state.form.username}
+					password={this.state.form.password}
+					handleChange={this.handleLoginFieldChange}
+					handleSubmit={this.login}
+				/>
+			</Togglable>
 		);
 
 		const blogForm = () => (
