@@ -33,7 +33,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		blogService.getAll().then( blogs =>
-			this.setState( { blogs } )
+			this.setState({ blogs })
 		);
 
 		const userJSON = window.localStorage.getItem('blogAppUser');
