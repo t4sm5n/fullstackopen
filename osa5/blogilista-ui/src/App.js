@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Blog from './components/Blog';
+import Notification from './components/Notification';
 
 import blogService from './services/blogs';
 import loginService from './services/login';
@@ -11,10 +12,20 @@ class App extends React.Component {
 		this.state = {
 			blogs: [],
 			user: null,
+			notification: {
+				message: null,
+				type: null
+			},
 			form: {
 				username: '',
 				password: ''
+			},
+			blog: {
+				title: '',
+				author: '',
+				url: ''
 			}
+
 		}
 	}
 
@@ -41,67 +52,143 @@ class App extends React.Component {
 
 			window.localStorage.setItem('blogAppUser', JSON.stringify(user));
 			blogService.setToken(user.token);
-			this.setState({ form: { username: '', password: '' }, user});
+			this.setState({ form: { username: '', password: '' }, user });
+			let username = this.state.user.username;
+			this.notify( "notification", `${username} logged in` );
 		} catch ( exception ) {
-			this.setState({
-				error: 'unknown username or password'
-			});
-			setTimeout(() => {
-				this.setState({ error: null })
-			}, 5000);
+			this.notify( "error", "unknown username or password" );
 		}
 	};
 
 	logout = (event) => {
 		event.preventDefault();
-		window.localStorage.removeItem('blogAppUser');
+		let username = this.state.user.username;
 		this.setState({user: null});
+		this.notify( "notification", `${username} logged out` );
+	};
+
+	create = async (event) => {
+		event.preventDefault();
+		try {
+			const blog = await blogService.create({
+				title: this.state.blog.title,
+				author: this.state.blog.author,
+				url: this.state.blog.url
+			});
+
+			this.setState({
+				blogs: this.state.blogs.concat(blog),
+				blog: { title: '', author: '', url: '' }
+			});
+
+			this.notify( "notification", "blog created" );
+		} catch (exception) {
+			this.notify( "error", "error while creating blog" );
+		}
 	};
 
 	handleLoginFieldChange = ( event ) => {
 		this.setState({ form: { ...this.state.form, [ event.target.name ]: event.target.value } });
 	};
 
+	handleBlogFieldChange = (event) => {
+		this.setState({ blog: { ...this.state.blog, [event.target.name]: event.target.value } });
+	};
+
+	notify = (type, message) => {
+		this.setState({ notification: { type: type, message: message } });
+		setTimeout(() => {
+			this.setState({ notification: { type: null, message: null } });
+		}, 5000);
+	};
+
 	render() {
-		if ( this.state.user === null ) {
-			return (
+		const loginForm = () => (
+			<div>
+				<h2>Log in to application</h2>
+				<form onSubmit={ this.login }>
+					<div>
+						username:
+						<input
+							type="text"
+							name="username"
+							value={ this.state.form.username }
+							onChange={ this.handleLoginFieldChange }
+						/>
+					</div>
+					<div>
+						password:
+						<input
+							type="password"
+							name="password"
+							value={ this.state.form.password }
+							onChange={ this.handleLoginFieldChange }
+						/>
+					</div>
+					<button type="submit">kirjaudu</button>
+				</form>
+			</div>
+		);
+
+		const blogForm = () => (
+			<div>
+				<h2>Add a new blog</h2>
 				<div>
-					<h1>Log in to application</h1>
-					<form onSubmit={ this.login }>
+					<form onSubmit={ this.create }>
 						<div>
-							username:
+							title
 							<input
 								type="text"
-								name="username"
-								value={ this.state.form.username }
-								onChange={ this.handleLoginFieldChange }
+								name="title"
+								value={ this.state.blog.title }
+								onChange={ this.handleBlogFieldChange }
 							/>
 						</div>
 						<div>
-							password:
+							author
 							<input
-								type="password"
-								name="password"
-								value={ this.state.form.password }
-								onChange={ this.handleLoginFieldChange }
+								type="text"
+								name="author"
+								value={ this.state.blog.author }
+								onChange={ this.handleBlogFieldChange }
 							/>
 						</div>
-						<button type="submit">kirjaudu</button>
+						<div>
+							url
+							<input
+								type="text"
+								name="url"
+								value={ this.state.blog.url }
+								onChange={ this.handleBlogFieldChange }
+							/>
+						</div>
+						<button type="submit">Save</button>
 					</form>
 				</div>
-			)
-		}
+			</div>
+		);
 
 		return (
 			<div>
-				<h2>blogs</h2>
+				<h1>Blogs</h1>
+
+				<Notification message={ this.state.notification.message } type={ this.state.notification.type } />
+
+				{this.state.user === null ?
+					loginForm() :
+					<div>
+						<p>{this.state.user.name} logged in</p>
+						<button onClick={this.logout}>logout</button>
+						{blogForm()}
+					</div>
+				}
+
+				<h2>Blogs</h2>
 				<div>
-					{this.state.user.name} logged in
-					<button onClick={this.logout}>logout</button>
+					{this.state.blogs.map( blog =>
+						<Blog key={blog.id} blog={blog}/>
+					)}
 				</div>
-				{this.state.blogs.map( blog =>
-					<Blog key={blog.id} blog={blog}/>
-				)}
 			</div>
 		);
 	}
