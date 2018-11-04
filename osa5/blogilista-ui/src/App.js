@@ -154,6 +154,10 @@ class App extends React.Component {
 			</div>
 		);
 
+		this.state.blogs.sort((a, b) => {
+			return b.likes - a.likes;
+		});
+
 		return (
 			<div>
 				<h1>Blogs</h1>
