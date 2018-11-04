@@ -1,5 +1,7 @@
 import React from 'react'
 
+import blogService from '../services/blogs';
+
 class Blog extends React.Component {
 	state = {
 		blog: this.props.blog,
@@ -10,6 +12,21 @@ class Blog extends React.Component {
 		this.setState({
 			expanded: !this.state.expanded
 		});
+	};
+
+	like = async () => {
+		const blog = await blogService.update(
+			this.state.blog.id,
+			{
+				user: this.state.blog.user.id,
+				likes: this.state.blog.likes + 1,
+				author: this.state.blog.author,
+				title: this.state.blog.title,
+				url: this.state.blog.url
+			}
+		);
+
+		this.setState({ blog: blog });
 	};
 
 	render() {
@@ -32,7 +49,7 @@ class Blog extends React.Component {
 							</div>
 							<div>
 								{this.state.blog.likes} likes
-								<button>like</button>
+								<button onClick={this.like}>like</button>
 							</div>
 							<div>
 								added by {this.state.blog.user.name}
