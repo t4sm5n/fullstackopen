@@ -111,3 +111,4 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 5.8 blogilistan frontend, osa 8
 - [x] 5.9 blogilistan frontend, osa 9
 - [x] 5.10 blogilistan frontend, osa 10
+- [x] 5.11 blogilistan frontend, osa 11
