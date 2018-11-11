@@ -41,30 +41,28 @@ class Blog extends React.Component {
 		};
 
 		return (
-			<div onClick={this.toggleExpanded} style={blogStyle}>
+			<div style={blogStyle}>
+				<div className={'nameDiv'} onClick={this.toggleExpanded}>
+					{this.state.blog.title} {this.state.blog.author}
+				</div>
 				{this.state.expanded ?
-					<div>
-						{this.state.blog.title} {this.state.blog.author}
+					<div className={'contentDiv'}>
 						<div>
-							<div>
-								<a href={this.state.blog.url}>{this.state.blog.url}</a>
-							</div>
-							<div>
-								{this.state.blog.likes} likes
-								<button onClick={this.like}>like</button>
-							</div>
-							<div>
-								added by {this.state.blog.user !== undefined ? this.state.blog.user.name : 'anonymous'}
-							</div>
-							{(this.props.user !== null && (this.state.blog.user === undefined || this.props.user.username === this.state.blog.user.username)) ?
-								<button onClick={() => this.props.delete(this.state.blog)}>delete</button> :
-								<div />
-							}
+							<a href={this.state.blog.url}>{this.state.blog.url}</a>
 						</div>
+						<div>
+							{this.state.blog.likes} likes
+							<button onClick={this.like}>like</button>
+						</div>
+						<div>
+							added by {this.state.blog.user !== undefined ? this.state.blog.user.name : 'anonymous'}
+						</div>
+						{(this.props.user !== null && (this.state.blog.user === undefined || this.props.user.username === this.state.blog.user.username)) ?
+							<button onClick={() => this.props.delete(this.state.blog)}>delete</button> :
+							<div/>
+						}
 					</div> :
-					<div>
-						{this.state.blog.title} {this.state.blog.author}
-					</div>
+					null
 				}
 			</div>
 		)
