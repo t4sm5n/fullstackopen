@@ -67,6 +67,7 @@ class App extends React.Component {
 		let username = this.state.user.username;
 		this.setState({user: null});
 		this.notify( "notification", `${username} logged out` );
+		window.localStorage.removeItem('blogAppUser');
 	};
 
 	create = async (event) => {
