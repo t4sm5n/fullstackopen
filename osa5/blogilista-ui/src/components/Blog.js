@@ -1,5 +1,7 @@
 import React from 'react'
 
+import PropTypes from 'prop-types';
+
 import blogService from '../services/blogs';
 
 class Blog extends React.Component {
@@ -54,7 +56,7 @@ class Blog extends React.Component {
 							<div>
 								added by {this.state.blog.user !== undefined ? this.state.blog.user.name : 'anonymous'}
 							</div>
-							{(this.state.blog.user === undefined || this.props.user.username === this.state.blog.user.username) ?
+							{(this.props.user !== null && (this.state.blog.user === undefined || this.props.user.username === this.state.blog.user.username)) ?
 								<button onClick={() => this.props.delete(this.state.blog)}>delete</button> :
 								<div />
 							}
@@ -65,9 +67,14 @@ class Blog extends React.Component {
 					</div>
 				}
 			</div>
-	)
+		)
 	}
-
 }
+
+Blog.propTypes = {
+	blog: PropTypes.object.isRequired,
+	delete: PropTypes.func.isRequired,
+	user: PropTypes.object
+};
 
 export default Blog;
