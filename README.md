@@ -98,3 +98,16 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 4.19 Blogilistan laajennus, osa 8
 - [x] 4.20 Blogilistan laajennus, osa 9
 - [x] 4.21 Blogilistan laajennus, osa 10
+
+## Osa 5 ([Ratkaisut](osa5))
+
+- [x] 5.1 blogilistan frontend, osa 1
+- [x] 5.2 blogilistan frontend, osa 2
+- [x] 5.3 blogilistan frontend, osa 3
+- [x] 5.4 blogilistan frontend, osa 4
+- [x] 5.5 blogilistan frontend, osa 5
+- [x] 5.6 blogilistan frontend, osa 6
+- [x] 5.7 blogilistan frontend, osa 7
+- [x] 5.8 blogilistan frontend, osa 8
+- [x] 5.9 blogilistan frontend, osa 9
+- [x] 5.10 blogilistan frontend, osa 10
