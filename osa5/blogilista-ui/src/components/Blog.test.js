@@ -12,7 +12,7 @@ const blog = {
 const mockDeleteHandler = jest.fn();
 
 describe.only('<Blog />', () => {
-	it('should display its details after clicking the name', function () {
+	it('should display its details after clicking the name', () => {
 		const blogComponent = shallow(
 			<Blog
 				blog={blog}
