@@ -112,3 +112,13 @@ Course material available at <https://fullstackopen.github.io/>
 - [x] 5.9 blogilistan frontend, osa 9
 - [x] 5.10 blogilistan frontend, osa 10
 - [x] 5.11 blogilistan frontend, osa 11
+- [x] 5.12 blogilistan testit, osa 1
+- [x] 5.13 blogilistan testit, osa 2
+- [x] 5.14 blogilistan testit, osa 3
+- [x] 5.15 blogilistan testit, osa 4
+- [x] 5.16 blogilistan testit, osa 5
+- [x] 5.17 unicafe revisited, osa 1
+- [x] 5.18 unicafe revisited, osa 2
+- [x] 5.19 anekdootit, osa 1
+- [x] 5.20 anekdootit, osa 2
+- [x] 5.21 anekdootit, osa 3
