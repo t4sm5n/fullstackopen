@@ -1,101 +1,80 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
 
-const Button = ({ onClick, arvo }) => {
-    return (
-        <button onClick={ onClick }>{ arvo }</button>
-    )
-};
+import counterReducer from './reducer';
+
+const store = createStore(counterReducer);
 
 class Statistics extends React.Component {
-    render() {
-        if( this.props.arvot.length === 0 ) {
-            return (
-                <p>Ei yhtään palautetta annettu!</p>
-            )
-        }
+	render() {
+		const state = store.getState();
+		const maara = Object.values(state).reduce((a, b) => a + b);
 
-        const keskiarvo = () => {
-            let summa = this.props.arvot.reduce(( previous, current ) => current += previous );
-            let keskiarvo = summa / this.props.arvot.length;
+		if (maara === 0) {
+			return (
+				<p>Ei yhtään palautetta annettu!</p>
+			)
+		}
 
-            return Math.round( keskiarvo * 10 ) / 10;
-        };
+		const keskiarvo = () => {
+			const summa = state.good - state.bad;
+			const keskiarvo = summa / maara;
 
-        const prosentti = () => {
-            let prosentti = ( this.props.hyva / this.props.arvot.length ) * 100;
+			return Math.round(keskiarvo * 10) / 10;
+		};
 
-            return Math.round( prosentti * 10 ) / 10;
-        };
-        
-        return (
-            <table>
-                <tbody>
-                    <Statistic teksti="Hyvä" arvo={ this.props.hyva } />
-                    <Statistic teksti="Neutraali" arvo={ this.props.neutraali } />
-                    <Statistic teksti="Huono" arvo={ this.props.huono } />
-                    <Statistic teksti="Keskiarvo" arvo={ keskiarvo() } />
-                    <Statistic teksti="Positiivisia" arvo={ `${ prosentti() } %` } />
-                </tbody>
-            </table>
-        )
-    }
+		const prosentti = () => {
+			let prosentti = (state.good / maara) * 100;
 
+			return Math.round(prosentti * 10) / 10;
+		};
+
+		return (
+			<table>
+				<tbody>
+				<Statistic teksti="Hyvä" arvo={state.good}/>
+				<Statistic teksti="Neutraali" arvo={state.ok}/>
+				<Statistic teksti="Huono" arvo={state.bad}/>
+				<Statistic teksti="Keskiarvo" arvo={keskiarvo()}/>
+				<Statistic teksti="Positiivisia" arvo={`${ prosentti() } %`}/>
+				</tbody>
+			</table>
+		)
+	}
 }
 
 const Statistic = ({ teksti, arvo }) => {
-    return (
-        <tr><td>{ teksti }</td><td>{ arvo }</td></tr>
-    )
+	return (
+		<tr>
+			<td>{teksti}</td>
+			<td>{arvo}</td>
+		</tr>
+	)
 };
 
 class App extends React.Component {
-    constructor( props ) {
-        super( props )
-        this.state = {
-            hyva: 0,
-            neutraali: 0,
-            huono: 0,
-            arvot: []
-        }
-    }
-  
-    palauteClick = ( palaute, arvo ) => {
-        return () => {
-            this.setState({
-                [palaute]: this.state[palaute] + 1,
-                arvot: this.state.arvot.concat( arvo )
-            })
-        }
-    };
-
-    clickHyva = () => {
-        this.setState({
-            hyva: this.state.hyva + 1,
-            arvot: this.state.arvot.concat( 1 )
-        })
-    };
-  
-    render() {
-        return (
-            <div>
-                <div>
-                    <h2>Anna palautetta</h2>
-                    <div>
-                        <Button onClick={ this.palauteClick( "hyva", 1 ) } arvo="Hyvä" />
-                        <Button onClick={ this.palauteClick( "neutraali", 0 ) } arvo="Neutraali" />
-                        <Button onClick={ this.palauteClick( "huono", -1 ) } arvo="Huono" />
-                        
-                    </div>
-                    <h2>Statistiikka</h2>
-                    <Statistics { ...this.state } />
-                </div>
-            </div>
-        )
-    }
+	render() {
+		return (
+			<div>
+				<div>
+					<h2>Anna palautetta</h2>
+					<div>
+						<button onClick={() => store.dispatch({ type: 'GOOD' })}>Hyvä</button>
+						<button onClick={() => store.dispatch({ type: 'OK' })}>Neutraali</button>
+						<button onClick={() => store.dispatch({ type: 'BAD' })}>Huono</button>
+					</div>
+					<h2>Statistiikka</h2>
+					<Statistics />
+				</div>
+			</div>
+		)
+	}
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById( 'root' )
-);
+const render = () => {
+	ReactDOM.render(<App/>, document.getElementById('root'));
+};
+
+render();
+store.subscribe(render);
