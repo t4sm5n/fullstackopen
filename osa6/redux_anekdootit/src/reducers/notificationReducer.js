@@ -1,16 +1,25 @@
-const initialState = 'default notification from reducer';
+const initialState = '';
 
 const notificationReducer = (state = initialState, action) => {
-	if (action.type === 'NOTIFY') {
+	if (action.type === 'SET') {
 		return action.notification;
+	}
+	if (action.type === 'REMOVE') {
+		return '';
 	}
 	return state;
 };
 
-export const notify = (notification) => {
+export const setNotification = (notification) => {
 	return {
-		type: 'NOTIFY',
+		type: 'SET',
 		notification
+	};
+};
+
+export const removeNotification = () => {
+	return {
+		type: 'REMOVE'
 	};
 };
 
