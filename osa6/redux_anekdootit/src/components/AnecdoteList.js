@@ -1,30 +1,35 @@
 import React from 'react';
-import { voting } from '../reducers/anecdoteReducer';
+import connect from 'react-redux/es/connect/connect';
+
+import { anecdoteCreation, voting } from '../reducers/anecdoteReducer';
 import { removeNotification, setNotification } from '../reducers/notificationReducer';
 
 class AnecdoteList extends React.Component {
 	vote = (anecdote) => {
-		this.props.store.dispatch(voting(anecdote.id));
-		this.props.store.dispatch(setNotification(`voted for '${anecdote.content}'`));
+		this.props.voting(anecdote.id);
+		this.props.setNotification(`voted for '${anecdote.content}'`);
 		setTimeout(() => {
-			this.props.store.dispatch(removeNotification());
+			this.props.removeNotification();
 		}, 5000);
 	};
 
 	render() {
-		let anecdotes = this.props.store.getState().anecdotes;
-		const filter = this.props.store.getState().filter;
+		const anecdotes = () => {
+			const { anecdotes, filter } = this.props;
 
-		if (filter !== '') {
-			anecdotes = anecdotes.filter(anecdote => {
+			if (filter === '') {
+				return anecdotes;
+			}
+
+			return anecdotes.filter(anecdote => {
 				return anecdote.content.toLowerCase().includes(filter.toLowerCase());
 			});
-		}
+		};
 
 		return (
 			<div>
 				<h2>Anecdotes</h2>
-				{anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+				{anecdotes().sort((a, b) => b.votes - a.votes).map(anecdote =>
 					<div key={anecdote.id}>
 						<div>
 							{anecdote.content}
@@ -44,4 +49,23 @@ class AnecdoteList extends React.Component {
 	}
 }
 
-export default AnecdoteList;
+const mapStateToProps = (state) => {
+	return {
+		anecdotes: state.anecdotes,
+		filter: state.filter
+	};
+};
+
+const mapDispatchToProps = {
+	anecdoteCreation,
+	voting,
+	setNotification,
+	removeNotification
+};
+
+const ConnectedAnecdoteList = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AnecdoteList);
+
+export default ConnectedAnecdoteList;
