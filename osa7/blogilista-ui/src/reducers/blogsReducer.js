@@ -16,6 +16,12 @@ const blogsReducer = (store = [], action) => {
 	if (action.type === 'REMOVE') {
 		return store.filter(blog => blog.id !== action.id);
 	}
+	if (action.type === 'COMMENT') {
+		const old = store.filter(blog => blog.id !== action.id);
+		const commented = store.find(blog => blog.id === action.id);
+
+		return [...old, { ...commented, comments: commented.comments.concat(action.comment) }];
+	}
 
 	return store;
 };
@@ -57,6 +63,17 @@ export const remove = (blog) => {
 		dispatch({
 			type: 'REMOVE',
 			id: blog.id
+		});
+	};
+};
+
+export const comment = (blog, comment) => {
+	return async (dispatch) => {
+		await blogService.comment(blog.id, comment);
+		dispatch({
+			type: 'COMMENT',
+			id: blog.id,
+			comment
 		});
 	};
 };

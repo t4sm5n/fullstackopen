@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 
-import { like, remove } from '../reducers/blogsReducer';
+import { comment, like, remove } from '../reducers/blogsReducer';
 
 class Blog extends React.Component {
 	like = () => {
@@ -13,6 +13,13 @@ class Blog extends React.Component {
 			this.props.remove(this.props.blog);
 			this.props.history.push("/");
 		}
+	};
+
+	comment = (event) => {
+		event.preventDefault();
+		const comment = event.target.comment.value;
+		event.target.comment.value = '';
+		this.props.comment(this.props.blog, comment);
 	};
 
 	render() {
@@ -51,6 +58,12 @@ class Blog extends React.Component {
 						</li>
 					))}
 				</ul>
+				<div>
+					<form onSubmit={this.comment}>
+						<input type="text" name="comment" />
+						<button type="submit">add comment</button>
+					</form>
+				</div>
 			</div>
 		)
 	}
@@ -67,7 +80,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = {
 	like,
-	remove
+	remove,
+	comment
 };
 
 const ConnectedBlog = connect(
