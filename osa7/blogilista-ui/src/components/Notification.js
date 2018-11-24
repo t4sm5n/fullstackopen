@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class Notification extends React.Component {
 	render() {
-		if (this.props.notification === undefined) {
+		if (this.props.notification === null) {
 			return null;
 		}
 

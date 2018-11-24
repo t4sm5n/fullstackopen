@@ -1,13 +1,11 @@
-const initialState = null;
-
-const notificationReducer = (state = initialState, action) => {
+const notificationReducer = (state = null, action) => {
 	switch (action.type) {
 		case 'SET':
 			return action.notification;
 		case 'REMOVE':
-			return '';
+			return null;
 		default:
-			return '';
+			return state;
 	}
 };
 
@@ -22,7 +20,19 @@ export const notify = (notification, time) => {
 				type: 'REMOVE'
 			})
 		}, time);
-	}
+	};
+};
+
+export const notifyWithDispatch = (notification, time, dispatch) => {
+	dispatch({
+		type: 'SET',
+		notification
+	});
+	setTimeout(() => {
+		dispatch({
+			type: 'REMOVE'
+		})
+	}, time);
 };
 
 export default notificationReducer;
