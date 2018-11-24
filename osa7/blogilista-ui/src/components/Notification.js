@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
 
 class Notification extends React.Component {
 	render() {
@@ -12,15 +13,15 @@ class Notification extends React.Component {
 		switch (notification.type) {
 			case 'error':
 				return (
-					<div className="error">
+					<Alert color="danger">
 						{ notification.message }
-					</div>
+					</Alert>
 				);
 			case 'notification':
 				return (
-					<div className="notification">
+					<Alert color="success">
 						{ notification.message }
-					</div>
+					</Alert>
 				);
 			default:
 				return null;

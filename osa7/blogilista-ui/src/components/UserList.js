@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Table } from 'reactstrap';
 
 class UserList extends Component {
 	render() {
 		return (
 			<div>
 				<h2>Users</h2>
-				<table>
+				<Table borderless>
 					<tbody>
 						<tr>
 							<th>&nbsp;</th>
@@ -24,7 +25,7 @@ class UserList extends Component {
 							</tr>
 						))}
 					</tbody>
-				</table>
+				</Table>
 			</div>
 		)
 	}

@@ -1,29 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { Link } from 'react-router-dom';
+import { Badge, ListGroup, ListGroupItem } from 'reactstrap';
 
 class BlogList extends Component {
 	render() {
-		const blogStyle = {
-			paddingTop: 10,
-			paddingLeft: 2,
-			border: 'solid',
-			borderWidth: 1,
-			marginBottom: 5
-		};
-
 		return (
-			<div>
-				<h2>Blogs</h2>
+			<ListGroup>
+				<legend>Blogs</legend>
 				{this.props.blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-					<div key={blog.id} style={blogStyle}>
-						<Link to={`/blogs/${blog.id}`}>
-							{blog.title} {blog.author}
-						</Link>
-					</div>
+					<ListGroupItem tag={Link} to={`/blogs/${blog.id}`} key={blog.id}>
+						{blog.title} {blog.author} <Badge pill>{blog.likes}</Badge>
+					</ListGroupItem>
 				)}
-			</div>
+			</ListGroup>
 		)
 	}
 }

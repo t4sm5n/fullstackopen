@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 import { createNew } from '../reducers/blogsReducer';
 
@@ -22,35 +23,23 @@ class BlogForm extends Component {
 
 	render() {
 		return (
-			<div>
-				<h2>Add a new blog</h2>
-				<div>
-					<form onSubmit={ this.createBlog }>
-						<div>
-							title
-							<input
-								type="text"
-								name="title"
-							/>
-						</div>
-						<div>
-							author
-							<input
-								type="text"
-								name="author"
-							/>
-						</div>
-						<div>
-							url
-							<input
-								type="text"
-								name="url"
-							/>
-						</div>
-						<button type="submit">Save</button>
-					</form>
-				</div>
-			</div>
+			<Form onSubmit={ this.createBlog }>
+				<legend>Add a new blog</legend>
+
+				<FormGroup>
+					<Label for="title">Title</Label>
+					<Input type="text" name="title" id="title" />
+				</FormGroup>
+				<FormGroup>
+					<Label for="author">Author</Label>
+					<Input type="text" name="author" id="author" />
+				</FormGroup>
+				<FormGroup>
+					<Label for="url">URL</Label>
+					<Input type="text" name="url" id="url" />
+				</FormGroup>
+				<Button color="primary" type="submit">save</Button>
+			</Form>
 		)
 	}
 }

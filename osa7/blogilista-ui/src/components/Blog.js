@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 import { comment, like, remove } from '../reducers/blogsReducer';
+import { Button, Form, FormGroup, Input, ListGroup, ListGroupItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Blog extends React.Component {
 	like = () => {
@@ -38,32 +40,38 @@ class Blog extends React.Component {
 					<div>
 						<a href={blog.url}>{blog.url}</a>
 					</div>
+					<br />
 					<div>
-						{blog.likes} likes
-						<button onClick={this.like}>like</button>
+						{blog.likes} likes &nbsp;
+						<Button onClick={this.like}>like</Button>
 					</div>
+					<br />
 					<div>
-						added by {blog.user !== undefined ? blog.user.name : 'anonymous'}
+						added by {blog.user !== undefined
+							? <Link to={`/users/${blog.user._id}`}>{blog.user.name}</Link>
+							: 'anonymous'}
 					</div>
 					{canDelete ?
-						<button onClick={this.remove}>delete</button> :
+						<Button onClick={this.remove}>delete</Button> :
 						<div/>
 					}
 				</div>
-				<h3>comments</h3>
-				<ul>
+				<br />
+				<ListGroup>
+					<legend>comments</legend>
 					{blog.comments.map((comment, index) => (
-						<li key={index}>
+						<ListGroupItem key={index}>
 							{comment}
-						</li>
+						</ListGroupItem>
 					))}
-				</ul>
-				<div>
-					<form onSubmit={this.comment}>
-						<input type="text" name="comment" />
-						<button type="submit">add comment</button>
-					</form>
-				</div>
+				</ListGroup>
+				<br />
+				<Form onSubmit={this.comment} inline>
+					<FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+						<Input type="text" name="comment" id="comment" />
+					</FormGroup>
+					<Button type="submit">add comment</Button>
+				</Form>
 			</div>
 		)
 	}
