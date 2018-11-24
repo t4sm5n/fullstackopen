@@ -1,5 +1,7 @@
 import blogService from '../services/blogs';
 
+import { notifyWithDispatch } from './notificationReducer';
+
 const blogsReducer = (store = [], action) => {
 	if (action.type === 'CREATE') {
 		return [...store, { ...action.content, likes: 0 }];
@@ -30,6 +32,7 @@ export const createNew = (content) => {
 	return async (dispatch, getState) => {
 		const newBlog = await blogService.create(content);
 		const user = getState().user;
+		notifyWithDispatch({ type: "notification", message: `new blog '${content.title}' created` }, 5000, dispatch);
 		dispatch({
 			type: 'CREATE',
 			content: { ...newBlog, user: user }
@@ -40,6 +43,7 @@ export const createNew = (content) => {
 export const like = (blog) => {
 	return async (dispatch) => {
 		const likedBlog = await blogService.update(blog.id, { ...blog, likes: blog.likes + 1 });
+		notifyWithDispatch({ type: "notification", message: `liked '${blog.title}'` }, 5000, dispatch);
 		dispatch({
 			type: 'LIKE',
 			id: likedBlog.id
@@ -60,6 +64,7 @@ export const initializeBlogs = () => {
 export const remove = (blog) => {
 	return async (dispatch) => {
 		await blogService.remove(blog.id);
+		notifyWithDispatch({ type: "notification", message: `'${blog.title}' removed` }, 5000, dispatch);
 		dispatch({
 			type: 'REMOVE',
 			id: blog.id
@@ -70,6 +75,7 @@ export const remove = (blog) => {
 export const comment = (blog, comment) => {
 	return async (dispatch) => {
 		await blogService.comment(blog.id, comment);
+		notifyWithDispatch({ type: "notification", message: `comment '${comment}' added to blog '${blog.title}'` }, 5000, dispatch);
 		dispatch({
 			type: 'COMMENT',
 			id: blog.id,
